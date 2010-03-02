@@ -22,6 +22,7 @@ import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.recorder.listeners.ActionList;
 import org.eclipse.swtbot.swt.recorder.widgets.text.CheckBoxSelectionListener;
+import org.eclipse.swtbot.swt.recorder.widgets.text.ComboSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.PushButtonSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.RadioButtonSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.ShellEventListener;
@@ -93,7 +94,7 @@ public class SWTBotRecorder {
 	private final Listener		radioButtonListener;
 	private final Listener		checkboxListener;
 	// private final Listener listSelectionListener;
-	// private final Listener comboSelectionListener;
+	private final Listener comboSelectionListener;
 	private final Listener		tabSelectionListener;
 	// private final Listener menuSelectionListener;
 	private boolean				running	= false;
@@ -115,7 +116,7 @@ public class SWTBotRecorder {
 		radioButtonListener = new RadioButtonSelectionListener(eventList, bot);
 		checkboxListener = new CheckBoxSelectionListener(eventList, bot);
 		// listSelectionListener = new ListSelectionListener(eventList, bot);
-		// comboSelectionListener = new ComboSelectionListener(eventList, bot);
+		 comboSelectionListener = new ComboSelectionListener(eventList, bot);
 		tabSelectionListener = new TabSelectionListener(eventList, bot);
 		// menuSelectionListener = new MenuSelectionListener(eventList, bot);
 	}
@@ -173,9 +174,9 @@ public class SWTBotRecorder {
 
 		//
 		// registerListSelectionListeners();
-		//
-		// registerComboSelectionListeners();
-		//
+		
+		registerComboSelectionListeners();
+		
 		registerTabSelectionListeners();
 		//
 		// registerMenuListeners();
@@ -189,11 +190,15 @@ public class SWTBotRecorder {
 		registerListener(SWT.Selection, tabSelectionListener);
 	}
 
-	//
-	// private void registerComboSelectionListeners() {
-	// registerListener(SWT.Verify, comboSelectionListener);
-	// }
-	//
+	private void registerComboSelectionListeners() {
+		// Register listeners for focus in, selection and focus out. The
+		// listener will remember the combo's state on focus in, and remove it
+		// on focus out.
+		registerListener(SWT.FocusIn, comboSelectionListener);
+		registerListener(SWT.FocusOut, comboSelectionListener);
+		registerListener(SWT.Selection, comboSelectionListener);
+	}
+
 	// private void registerListSelectionListeners() {
 	// registerListener(SWT.DefaultSelection, listSelectionListener);
 	// registerListener(SWT.Selection, listSelectionListener);

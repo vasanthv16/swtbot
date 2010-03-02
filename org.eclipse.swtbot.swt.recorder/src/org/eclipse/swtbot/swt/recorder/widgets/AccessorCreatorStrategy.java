@@ -71,7 +71,7 @@ public class AccessorCreatorStrategy {
 		return eventListener.getWidget(event);
 	}
 
-	private final String getText(Widget widget) {
+	protected String getText(Widget widget) {
 		return SWTUtils.getText(widget).replaceAll("&", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 

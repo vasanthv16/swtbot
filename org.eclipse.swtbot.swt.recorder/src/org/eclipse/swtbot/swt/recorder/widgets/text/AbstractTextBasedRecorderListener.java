@@ -59,12 +59,16 @@ public abstract class AbstractTextBasedRecorderListener implements Listener {
 
 	protected abstract SWTBotEvent createEvent(Event event);
 
-	private final SWTBotAccessor createAccessor(Event event) {
+	protected SWTBotAccessor createAccessor(Event event) {
 		return new AccessorCreatorStrategy(event, this, annotation, bot).create();
 	}
 
 	public Widget getWidget(Event event) {
 		return event.widget;
+	}
+
+	protected SWTBotWidget getAnnotation() {
+		return annotation;
 	}
 
 	private void doHandle(Event event) {
