@@ -27,6 +27,7 @@ import org.eclipse.swtbot.swt.finder.Style;
 import org.eclipse.swtbot.swt.finder.utils.ClassUtils;
 import org.eclipse.swtbot.swt.finder.utils.SWTUtils;
 import org.eclipse.swtbot.swt.finder.utils.StringUtils;
+import org.eclipse.swtbot.swt.recorder.generators.ISWTBotAccessor;
 import org.eclipse.swtbot.swt.recorder.generators.SWTBotAccessor;
 import org.eclipse.swtbot.swt.recorder.widgets.text.AbstractTextBasedRecorderListener;
 import org.hamcrest.Matcher;
@@ -55,7 +56,7 @@ public class AccessorCreatorStrategy {
 		this.bot = bot;
 	}
 
-	public SWTBotAccessor create() {
+	public ISWTBotAccessor create() {
 		Widget widget = getWidget();
 		String text = getText(widget);
 		if (!StringUtils.isEmptyOrNull(text)) {
@@ -67,31 +68,35 @@ public class AccessorCreatorStrategy {
 		return null;
 	}
 
-	private Widget getWidget() {
+	protected Widget getWidget() {
 		return eventListener.getWidget(event);
+	}
+
+	protected SWTBotWidget getAnnotation() {
+		return annotation;
 	}
 
 	protected String getText(Widget widget) {
 		return SWTUtils.getText(widget).replaceAll("&", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	private Matcher<Widget> createMatcher(String text) {
+	protected Matcher<Widget> createMatcher(String text) {
 		return allOf(typeMatcher(), mnemonicTextMatcher(text), styleMatcher());
 	}
 
-	private final Matcher<? extends Widget> typeMatcher() {
+	protected final Matcher<? extends Widget> typeMatcher() {
 		return widgetOfType(this.annotation.clasz());
 	}
 
-	private final Matcher<? extends Widget> mnemonicTextMatcher(String text) {
+	protected final Matcher<? extends Widget> mnemonicTextMatcher(String text) {
 		return withMnemonic(text);
 	}
 
-	private <T extends Widget> List<? extends T> similarWidgets(Matcher<T> matcher, Widget widget) {
+	protected <T extends Widget> List<? extends T> similarWidgets(Matcher<T> matcher, Widget widget) {
 		return bot.widgets(matcher);
 	}
 
-	private final Matcher<? extends Widget> styleMatcher() {
+	protected final Matcher<? extends Widget> styleMatcher() {
 		Style style = annotation.style();
 		return withStyle(style.value(), style.name());
 	}

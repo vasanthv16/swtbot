@@ -16,7 +16,7 @@ import org.eclipse.swtbot.swt.finder.utils.internal.Assert;
  * @author Ketan Padegaonkar &lt;KetanPadegaonkar [at] gmail [dot] com&gt;
  * @version $Id: SWTBotAccessor.java 64 2009-01-07 18:43:01Z kpadegaonka $
  */
-public class SWTBotAccessor {
+public class SWTBotAccessor implements ISWTBotAccessor {
 
 	private final String	bot;
 	private final String	methodCall;

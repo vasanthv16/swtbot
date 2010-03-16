@@ -154,6 +154,32 @@ public abstract class WidgetMatcherFactory {
   }
 
   /**
+   * Returns a matcher that matches objects containing all items that matches the matcher.
+   * <p>
+   * <strong>Note:</strong> This invokes getItems method on the object and expects to see an array as a return value.
+   * </p>
+   * 
+   * @param items An array of expected items.
+   * @return a matcher.
+   */
+  public static <T extends org.eclipse.swt.widgets.Item> org.hamcrest.Matcher<T> withItems(String[] items) {
+    return org.eclipse.swtbot.swt.finder.matchers.WithItems.withItems(items);
+  }
+
+  /**
+   * Returns a matcher that matches objects containing all items that matches the matcher.
+   * <p>
+   * <strong>Note:</strong> This invokes getItems method on the object and expects to see an array as a return value.
+   * </p>
+   * 
+   * @param matcher the matcher.
+   * @return a matcher.
+   */
+  public static <T extends org.eclipse.swt.widgets.Item> org.hamcrest.Matcher<T> withItems(org.hamcrest.Matcher<?> matcher) {
+    return org.eclipse.swtbot.swt.finder.matchers.WithItems.withItems(matcher);
+  }
+
+  /**
    * Matches a widget that belongs to the specified group
    * 
    * @param labelText the label.

@@ -21,7 +21,7 @@ import org.eclipse.swtbot.swt.finder.SWTBotWidget;
 import org.eclipse.swtbot.swt.finder.utils.ClassUtils;
 import org.eclipse.swtbot.swt.finder.utils.SWTBotEvents;
 import org.eclipse.swtbot.swt.finder.utils.SWTUtils;
-import org.eclipse.swtbot.swt.recorder.generators.SWTBotAccessor;
+import org.eclipse.swtbot.swt.recorder.generators.ISWTBotAccessor;
 import org.eclipse.swtbot.swt.recorder.generators.SWTBotAction;
 import org.eclipse.swtbot.swt.recorder.generators.SWTBotEvent;
 import org.eclipse.swtbot.swt.recorder.listeners.ActionList;
@@ -59,7 +59,7 @@ public abstract class AbstractTextBasedRecorderListener implements Listener {
 
 	protected abstract SWTBotEvent createEvent(Event event);
 
-	protected SWTBotAccessor createAccessor(Event event) {
+	protected ISWTBotAccessor createAccessor(Event event) {
 		return new AccessorCreatorStrategy(event, this, annotation, bot).create();
 	}
 
@@ -80,7 +80,7 @@ public abstract class AbstractTextBasedRecorderListener implements Listener {
 		return hasSWTBotAnnotation() && canHandleWidget(event);
 	}
 
-	private final boolean canHandleWidget(Event event) {
+	protected boolean canHandleWidget(Event event) {
 		Widget widget = getWidget(event);
 		return matchesWidgetType(widget) && matchesWidgetStyle(widget) && !SWTUtils.isEmptyOrNullText(widget) && doCanHandleEvent(event);
 	}
@@ -97,7 +97,7 @@ public abstract class AbstractTextBasedRecorderListener implements Listener {
 		return SWTUtils.hasStyle(widget, this.annotation.style().value());
 	}
 
-	private boolean matchesWidgetType(Widget widget) {
+	protected boolean matchesWidgetType(Widget widget) {
 		if (widget == null)
 			return false;
 		return this.annotation.clasz().equals(widget.getClass());

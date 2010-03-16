@@ -23,6 +23,7 @@ import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.recorder.listeners.ActionList;
 import org.eclipse.swtbot.swt.recorder.widgets.text.CheckBoxSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.ComboSelectionListener;
+import org.eclipse.swtbot.swt.recorder.widgets.text.ListSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.PushButtonSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.RadioButtonSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.ShellEventListener;
@@ -93,7 +94,7 @@ public class SWTBotRecorder {
 	private final Listener		pushButtonListener;
 	private final Listener		radioButtonListener;
 	private final Listener		checkboxListener;
-	// private final Listener listSelectionListener;
+	private final Listener listSelectionListener;
 	private final Listener comboSelectionListener;
 	private final Listener		tabSelectionListener;
 	// private final Listener menuSelectionListener;
@@ -115,7 +116,7 @@ public class SWTBotRecorder {
 		pushButtonListener = new PushButtonSelectionListener(eventList, bot);
 		radioButtonListener = new RadioButtonSelectionListener(eventList, bot);
 		checkboxListener = new CheckBoxSelectionListener(eventList, bot);
-		// listSelectionListener = new ListSelectionListener(eventList, bot);
+		listSelectionListener = new ListSelectionListener(eventList, bot);
 		 comboSelectionListener = new ComboSelectionListener(eventList, bot);
 		tabSelectionListener = new TabSelectionListener(eventList, bot);
 		// menuSelectionListener = new MenuSelectionListener(eventList, bot);
@@ -172,8 +173,8 @@ public class SWTBotRecorder {
 		registerRadioButtonListeners();
 		registerCheckboxListeners();
 
-		//
-		// registerListSelectionListeners();
+		
+		registerListSelectionListeners();
 		
 		registerComboSelectionListeners();
 		
@@ -199,10 +200,10 @@ public class SWTBotRecorder {
 		registerListener(SWT.Selection, comboSelectionListener);
 	}
 
-	// private void registerListSelectionListeners() {
-	// registerListener(SWT.DefaultSelection, listSelectionListener);
-	// registerListener(SWT.Selection, listSelectionListener);
-	// }
+	private void registerListSelectionListeners() {
+		registerListener(SWT.DefaultSelection, listSelectionListener);
+		registerListener(SWT.Selection, listSelectionListener);
+	}
 
 	private void registerPushButtonListeners() {
 		registerListener(SWT.DefaultSelection, pushButtonListener);

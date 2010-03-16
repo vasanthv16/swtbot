@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
-import org.eclipse.swtbot.swt.recorder.generators.SWTBotAccessor;
+import org.eclipse.swtbot.swt.recorder.generators.ISWTBotAccessor;
 import org.eclipse.swtbot.swt.recorder.generators.SWTBotEvent;
 import org.eclipse.swtbot.swt.recorder.listeners.ActionList;
 import org.eclipse.swtbot.swt.recorder.widgets.AccessorCreatorStrategy;
@@ -32,7 +32,7 @@ public class ComboSelectionListener extends AbstractTextBasedRecorderListener {
 	}
 
 	@Override
-	protected SWTBotAccessor createAccessor(Event event) {
+	protected ISWTBotAccessor createAccessor(Event event) {
 		// Creates an accessor based on the Combo's previous text value (before there is a selection change).
 		AccessorCreatorStrategy accessorCreatorStrategy = new ComboAccessorCreatorStrategy(
 				event, this, getAnnotation(), bot, comboText);

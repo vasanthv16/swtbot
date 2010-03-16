@@ -21,14 +21,14 @@ import org.eclipse.swtbot.swt.recorder.listeners.ActionList;
  */
 public class SWTBotAction {
 
-	private final SWTBotAccessor	accessor;
+	private final ISWTBotAccessor	accessor;
 	private final SWTBotEvent		event;
 
 	/**
 	 * @param accessor the accessor
 	 * @param event the event
 	 */
-	public SWTBotAction(SWTBotAccessor accessor, SWTBotEvent event) {
+	public SWTBotAction(ISWTBotAccessor accessor, SWTBotEvent event) {
 		Assert.isNotNull(accessor);
 		Assert.isNotNull(event);
 		this.accessor = accessor;
