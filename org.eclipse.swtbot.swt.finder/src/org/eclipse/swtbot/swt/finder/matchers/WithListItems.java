@@ -13,19 +13,20 @@ package org.eclipse.swtbot.swt.finder.matchers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import org.eclipse.swt.widgets.Item;
-import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swtbot.swt.finder.utils.SWTUtils;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 /**
- * Similar to {@link WithItem} except that this version requires a match on *all* items through the matcher, instead of just any one.
- * @author
+ * Matcher that matches on a {@link List}'s item values. All the values in a
+ * List should match, for the matcher to be successful.
+ * 
+ * @author Vasanth Velusamy &lt;vasanthv16 [at] gmail [dot] com&gt;
  * @version $Id$
  */
-public class WithItems<T extends Item> extends AbstractMatcher<T> {
+public class WithListItems<T extends List> extends AbstractMatcher<T> {
 	private final Matcher<?>	itemsMatcher;
 
 	/**
@@ -34,7 +35,7 @@ public class WithItems<T extends Item> extends AbstractMatcher<T> {
 	 * 
 	 * @param itemsMatcher the items matcher
 	 */
-	WithItems(Matcher<?> itemsMatcher) {
+	WithListItems(Matcher<?> itemsMatcher) {
 		this.itemsMatcher = itemsMatcher;
 	}
 
@@ -47,9 +48,8 @@ public class WithItems<T extends Item> extends AbstractMatcher<T> {
 	protected boolean doMatch(Object obj) {
 		boolean result = false;
 		try {
-			T[] actualItems = getItems(obj);
-			String[] actualItemValues = getValuesForItems(actualItems);
-			if (this.itemsMatcher.matches(actualItemValues)) {
+			String[] actualItems = getItems(obj);
+			if (this.itemsMatcher.matches(actualItems)) {
 				result = true;
 			}
 		} catch (Exception e) {
@@ -58,34 +58,12 @@ public class WithItems<T extends Item> extends AbstractMatcher<T> {
 		return result;
 	}
 	
-	/**
-	 * Returns an array of values corresponding to the specified list of tree
-	 * items.
-	 * 
-	 * @param items
-	 * @return
-	 */
-	public String[] getValuesForItems(T[] items) {
-		String[] values = new String[items.length];
-		for (int i = 0; i < items.length; i++) {
-			T item = items[i];
-			values[i] = item.getText();
-		}
-
-		return values;
-	}
-
-//	@SuppressWarnings("unchecked")
-//	private String[] getItems(Object obj) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-//		return (String[]) SWTUtils.invokeMethod(obj, "getItems");
-//	}
-
 	@SuppressWarnings("unchecked")
-	private T[] getItems(Object obj) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		return (T[]) SWTUtils.invokeMethod(obj, "getItems");
+	private String[] getItems(Object obj) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		return (String[]) SWTUtils.invokeMethod(obj, "getItems");
 	}
 
-	public ArrayList<T> getAllMatches() {
+	public ArrayList<String[]> getAllMatches() {
 		// This method is not meaningful for this subclass.
 		throw new UnsupportedOperationException();
 	}
@@ -105,8 +83,7 @@ public class WithItems<T extends Item> extends AbstractMatcher<T> {
 	 * @return a matcher.
 	 */
 	@Factory
-	public
-	static <T extends Item> WithItems<T> withItems(Matcher<?> matcher) {
-		return new WithItems<T>(matcher);
+	public static <T extends List> WithListItems<T> withListItems(Matcher<?> matcher) {
+		return new WithListItems<T>(matcher);
 	}
 }

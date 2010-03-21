@@ -1,6 +1,9 @@
 // Generated source.
 package org.eclipse.swtbot.swt.finder.matchers;
 
+import org.eclipse.swt.widgets.List;
+import org.hamcrest.core.IsEqual;
+
 public abstract class WidgetMatcherFactory {
 
   /**
@@ -163,7 +166,7 @@ public abstract class WidgetMatcherFactory {
    * @return a matcher.
    */
   public static <T extends org.eclipse.swt.widgets.Item> org.hamcrest.Matcher<T> withItems(String[] items) {
-    return org.eclipse.swtbot.swt.finder.matchers.WithItems.withItems(items);
+    return org.eclipse.swtbot.swt.finder.matchers.WithItems.withItems(new IsEqual<String[]>(items));
   }
 
   /**
@@ -172,11 +175,11 @@ public abstract class WidgetMatcherFactory {
    * <strong>Note:</strong> This invokes getItems method on the object and expects to see an array as a return value.
    * </p>
    * 
-   * @param matcher the matcher.
+   * @param items An array of expected items.
    * @return a matcher.
    */
-  public static <T extends org.eclipse.swt.widgets.Item> org.hamcrest.Matcher<T> withItems(org.hamcrest.Matcher<?> matcher) {
-    return org.eclipse.swtbot.swt.finder.matchers.WithItems.withItems(matcher);
+  public static <T extends org.eclipse.swt.widgets.List> org.hamcrest.Matcher<T> withListItems(String[] items) {
+    return org.eclipse.swtbot.swt.finder.matchers.WithListItems.withListItems(new IsEqual<String[]>(items));
   }
 
   /**

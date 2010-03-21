@@ -28,6 +28,7 @@ import org.eclipse.swtbot.swt.recorder.widgets.text.PushButtonSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.RadioButtonSelectionListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.ShellEventListener;
 import org.eclipse.swtbot.swt.recorder.widgets.text.TabSelectionListener;
+import org.eclipse.swtbot.swt.recorder.widgets.text.TreeEventListener;
 
 /**
  * @author Ketan Padegaonkar &lt;KetanPadegaonkar [at] gmail [dot] com&gt;
@@ -89,7 +90,7 @@ public class SWTBotRecorder {
 	private final ActionList	eventList;
 
 	private final Listener		shellEventListener;
-	// private final Listener treeEventListener;
+	private final Listener treeEventListener;
 	// private final Listener keyEventListener;
 	private final Listener		pushButtonListener;
 	private final Listener		radioButtonListener;
@@ -111,7 +112,7 @@ public class SWTBotRecorder {
 		registeredListeners = new HashSet<ListenerSet>();
 		eventList = new ActionList();
 		shellEventListener = new ShellEventListener(eventList, bot);
-		// treeEventListener = new TreeEventListener(eventList, bot);
+		treeEventListener = new TreeEventListener(eventList, bot);
 		// keyEventListener = new KeyEventListener(eventList, bot);
 		pushButtonListener = new PushButtonSelectionListener(eventList, bot);
 		radioButtonListener = new RadioButtonSelectionListener(eventList, bot);
@@ -164,8 +165,8 @@ public class SWTBotRecorder {
 	 */
 	protected void hookListeners() {
 		registerShellListeners();
-		//
-		// registerTreeListeners();
+		
+		registerTreeListeners();
 		//
 		// registerKeyListeners();
 
@@ -224,12 +225,13 @@ public class SWTBotRecorder {
 	// private void registerKeyListeners() {
 	// registerListener(SWT.KeyDown, keyEventListener);
 	// }
-	//
-	// private void registerTreeListeners() {
-	// registerListener(SWT.Collapse, treeEventListener);
-	// registerListener(SWT.Expand, treeEventListener);
-	// }
-	//
+
+	private void registerTreeListeners() {
+		registerListener(SWT.Collapse, treeEventListener);
+		registerListener(SWT.Expand, treeEventListener);
+		registerListener(SWT.Selection, treeEventListener);
+	}
+	
 	private void registerShellListeners() {
 		registerListener(SWT.Activate, shellEventListener);
 		registerListener(SWT.Close, shellEventListener);
