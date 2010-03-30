@@ -53,10 +53,12 @@ public class TreeEventListener extends AbstractTextBasedRecorderListener {
 		}
 		else if(event.type == SWT.Expand)
 		{
-			// TODO VV: Add support for expanding a tree node.
+			TreeItem expandedItem = (TreeItem) event.item;
+			return new SWTBotEvent("expandNode", expandedItem.getText());
 		} else if(event.type == SWT.Collapse)
 		{
-			// TODO VV: Add support for collapsing a tree node.
+			TreeItem expandedItem = (TreeItem) event.item;
+			return new SWTBotEvent("collapseNode", expandedItem.getText());
 		}
 		
 		return null;
